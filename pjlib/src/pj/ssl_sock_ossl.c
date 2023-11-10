@@ -1662,8 +1662,9 @@ static pj_status_t ssl_create(pj_ssl_sock_t *ssock)
     SSL_set_ex_data(ossock->ossl_ssl, sslsock_idx, ssock);
 
     /* SSL verification options */
-    mode = SSL_VERIFY_PEER;
-    if (ssock->is_server && ssock->param.require_client_cert)
+    mode = !ssock->is_server || ssock->param.request_client_cert ?
+           SSL_VERIFY_PEER : SSL_VERIFY_NONE;
+    if (ssock->param.require_client_cert)
         mode |= SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
 
     SSL_set_verify(ossock->ossl_ssl, mode, &verify_cb);

@@ -780,9 +780,10 @@ static pj_status_t ssl_create(pj_ssl_sock_t *ssock)
     }
 
     /* Require client certificate if asked */
-    if (ssock->is_server && ssock->param.require_client_cert)
+    if (ssock->is_server && (ssock->param.require_client_cert || ssock->param.request_client_cert))
         gnutls_certificate_server_set_request(gssock->session,
-                                              GNUTLS_CERT_REQUIRE);
+                                              ssock->param.require_client_cert ?
+                                              GNUTLS_CERT_REQUIRE : GNUTLS_CERT_REQUEST);
 
     /* Finally set credentials for this session */
     ret = gnutls_credentials_set(gssock->session,

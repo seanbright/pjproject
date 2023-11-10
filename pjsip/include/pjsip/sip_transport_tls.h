@@ -422,6 +422,16 @@ typedef struct pjsip_tls_setting
      */
     pj_bool_t(*on_verify_cb)(const pjsip_tls_on_verify_param *param);
 
+    /**
+     * When acting as server (incoming TLS connections), request a
+     * certificate from the client. Implied by require_client_cert.
+     *
+     * This setting corresponds to SSL_VERIFY_PEER flag.
+     * Default value is PJ_TRUE.
+     */
+    pj_bool_t   request_client_cert;
+
+
 } pjsip_tls_setting;
 
 

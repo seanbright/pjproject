@@ -454,8 +454,10 @@ static pj_status_t ssl_create(pj_ssl_sock_t *ssock)
                                   true);
         if (err != noErr)
             pj_status_from_err(dssock, "BreakOnServerAuth", err);
-    } else if (ssock->is_server && ssock->param.require_client_cert) {
-        err = SSLSetClientSideAuthenticate(ssl_ctx, kAlwaysAuthenticate);
+    } else if (ssock->is_server &&
+        (ssock->param.require_client_cert || ssock->param.request_client_cert)) {
+        err = SSLSetClientSideAuthenticate(ssl_ctx, ssock->param.require_client_cert ?
+                                                    kAlwaysAuthenticate : kTryAuthenticate);
         if (err != noErr)
                 pj_status_from_err(dssock, "SetClientSideAuth", err);
 

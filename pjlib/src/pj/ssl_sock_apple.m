@@ -1004,7 +1004,7 @@ static pj_status_t network_create_params(pj_ssl_sock_t * ssock,
         
         /* SSL verification options */
         sec_protocol_options_set_peer_authentication_required(sec_options,
-            true);
+            !ssock->is_server || ssock->param.request_client_cert);
 
         /* Handshake flow:
          * 1. Server's challenge block, provide server's trust

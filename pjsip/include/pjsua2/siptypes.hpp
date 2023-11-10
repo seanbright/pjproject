@@ -409,6 +409,15 @@ struct TlsConfig : public PersistentObject
      */
     bool                enableRenegotiation;
 
+    /**
+     * When acting as server (incoming TLS connections), request
+     * a certificate from the client.
+     *
+     * This setting corresponds to SSL_VERIFY_PEER flag.
+     * Default value is PJ_TRUE.
+     */
+    bool                requestClientCert;
+
 public:
     /** Default constructor initialises with default values */
     TlsConfig();

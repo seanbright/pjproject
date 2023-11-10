@@ -207,6 +207,7 @@ pjsip_tls_setting TlsConfig::toPj() const
                             (pj_ssl_cipher*)&this->ciphers[0] : NULL;
     ts.verify_server    = this->verifyServer;
     ts.verify_client    = this->verifyClient;
+    ts.request_client_cert = this->requestClientCert;
     ts.require_client_cert = this->requireClientCert;
     ts.timeout.sec      = this->msecTimeout / 1000;
     ts.timeout.msec     = this->msecTimeout % 1000;
@@ -238,6 +239,7 @@ void TlsConfig::fromPj(const pjsip_tls_setting &prm)
     this->ciphers       = IntVector(prm.ciphers, prm.ciphers+prm.ciphers_num);
     this->verifyServer  = PJ2BOOL(prm.verify_server);
     this->verifyClient  = PJ2BOOL(prm.verify_client);
+    this->requestClientCert = PJ2BOOL(prm.request_client_cert);
     this->requireClientCert = PJ2BOOL(prm.require_client_cert);
     this->msecTimeout   = PJ_TIME_VAL_MSEC(prm.timeout);
     this->qosType       = prm.qos_type;
@@ -263,6 +265,7 @@ void TlsConfig::readObject(const ContainerNode &node) PJSUA2_THROW(Error)
     readIntVector     ( this_node, "ciphers", ciphers);
     NODE_READ_BOOL    ( this_node, verifyServer);
     NODE_READ_BOOL    ( this_node, verifyClient);
+    NODE_READ_BOOL    ( this_node, requestClientCert);
     NODE_READ_BOOL    ( this_node, requireClientCert);
     NODE_READ_UNSIGNED( this_node, msecTimeout);
     NODE_READ_NUM_T   ( this_node, pj_qos_type, qosType);
@@ -289,6 +292,7 @@ void TlsConfig::writeObject(ContainerNode &node) const PJSUA2_THROW(Error)
     writeIntVector     ( this_node, "ciphers", ciphers);
     NODE_WRITE_BOOL    ( this_node, verifyServer);
     NODE_WRITE_BOOL    ( this_node, verifyClient);
+    NODE_WRITE_BOOL    ( this_node, requestClientCert);
     NODE_WRITE_BOOL    ( this_node, requireClientCert);
     NODE_WRITE_UNSIGNED( this_node, msecTimeout);
     NODE_WRITE_NUM_T   ( this_node, pj_qos_type, qosType);

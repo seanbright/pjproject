@@ -1189,6 +1189,14 @@ typedef struct pj_ssl_sock_param
      */
     pj_bool_t enable_renegotiation;
 
+    /**
+     * When secure socket is acting as server (handles incoming connection),
+     * request a certificate from the client.
+     *
+     * Default: PJ_TRUE
+     */
+    pj_bool_t request_client_cert;
+
 } pj_ssl_sock_param;
 
 

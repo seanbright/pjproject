@@ -314,6 +314,7 @@ static void set_ssock_param(pj_ssl_sock_param *ssock_param,
     ssock_param->async_cnt = listener->async_cnt;
     ssock_param->ioqueue = pjsip_endpt_get_ioqueue(listener->endpt);
     ssock_param->timer_heap = pjsip_endpt_get_timer_heap(listener->endpt);
+    ssock_param->request_client_cert = listener->tls_setting.request_client_cert;
     ssock_param->require_client_cert = listener->tls_setting.require_client_cert;
     ssock_param->timeout = listener->tls_setting.timeout;
     ssock_param->user_data = listener;
